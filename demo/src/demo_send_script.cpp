@@ -1,6 +1,6 @@
 #include "rclcpp/rclcpp.hpp"
 #include "tm_msgs/srv/send_script.hpp"
-
+#include <rclcpp/future_return_code.hpp>
 #include <chrono>
 #include <cstdlib>
 #include <memory>
@@ -23,7 +23,7 @@ bool send_cmd(std::string cmd, std::shared_ptr<rclcpp::Node> node, rclcpp::Clien
   auto result = client->async_send_request(request);
   // Wait for the result.
   if (rclcpp::spin_until_future_complete(node, result) ==
-    rclcpp::executor::FutureReturnCode::SUCCESS)
+    rclcpp::FutureReturnCode::SUCCESS)
   {
     //RCLCPP_INFO(rclcpp::get_logger("rclcpp"), "Sum: %ld", result.get()->ok);
     if(result.get()->ok){
